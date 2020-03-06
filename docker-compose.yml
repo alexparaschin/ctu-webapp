@@ -1,5 +1,6 @@
 version: "3"
-
+volumes:
+  pgdata:
 services:
   ctu-web:
     build:
@@ -8,5 +9,15 @@ services:
       - "8000:8000"
     volumes:
       - ./ctu-main:/ctu-main
-    command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+
+  ctu-db:
+    image: postgres:12.2   #replace this with the required registry
+    environment:
+      POSTGRES_USER: ctu-sa
+      POSTGRES_DB: ctu-db
+      POSTGRES_PASS: devsecops
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+

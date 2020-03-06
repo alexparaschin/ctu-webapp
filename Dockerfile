@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.8-slim
 MAINTAINER ALEXANDRU I PARASCHIN
 
 ENV PYTHONUNBUFFERED 1
@@ -10,5 +10,10 @@ RUN mkdir /ctu-main
 WORKDIR /ctu-main
 COPY ./ctu-main /ctu-main
 
-RUN adduser -D ctu-sa
+CMD ["python","manage.py","runserver", "0.0.0.0:8000"]
+
+#RUN adduser -D ctu-sa
+#USER ctu-sa
+
+RUN useradd -ms /bin/bash ctu-sa
 USER ctu-sa
